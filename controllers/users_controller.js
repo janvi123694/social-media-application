@@ -1,4 +1,7 @@
-const User = require('../models/user'); 
+
+// importing user schema 
+const User = require('../models/user');
+
 
 //RENDER  PROFILE PG -> /users/profile
 module.exports.profile= function(req,res){
@@ -21,21 +24,36 @@ module.exports.signIn = function(req,res){
 	});
 }
 
+//SIGN UP 
 module.exports.create = function(req,res){
-  /*if(req.body.password!= req.body.confirm_password){
+
+// check if pw is same as the confirm_password
+  if(req.body.password!= req.body.confirm_password){
   	  return res.redirect('back'); 
   }
-  User.findOne({req.body.email},function(err,user){
+
+  // check if the email is unique ;  returns the first document that has email=== req.body.email
+  User.findOne({email : req.body.email},function(err,user){
      if(err){ console.log("error in finding user for sign up "); return; }
-	 if(!user){
-	 	 User.create(req.body,function(err,user){
+
+	 if(!user){     // if user is not found ie unique 
+
+	     // creaing a schema 
+	 	 User.create(req.body,function(err,user){    
+
 		  if(err){ console.log("error while creating user"); return; }
 		  
-		  return res.redirect("/users/sign-in"); 
-		 })
+		  return res.redirect("/users/sign-in");  // sign up pg ->sign in pg 
+		 });
 	 }
-  }*/
+
+	 else{
+	 	 return res.redirect('back'); // redirect to sign up pg again 
+	 }
+  })
 }
+
+
 module.exports.createSession = function(){
 
 }

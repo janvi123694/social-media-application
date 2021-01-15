@@ -8,4 +8,6 @@ router.get('/profile',usersController.profile); // /users/profile -> call usersC
 router.get('/sign-up',usersController.signUp); 
 router.get('/sign-in',usersController.signIn); 
 
+router.post('/create',usersController.create); 
+
 module.exports= router; // exporting to index.js so that route is accessible 
