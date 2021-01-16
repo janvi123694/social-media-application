@@ -12,24 +12,33 @@ module.exports.profile= function(req,res){
 
 //RENDER SIGN UP PG ->    /users_signup
 module.exports.signUp = function(req,res){   // sending data to user_sign_up ejs file 
-	return res.render('user_sign_up', {
-	 title : "Codial | Sign Up"
-	});
+    
+	   return res.render('user_sign_up', {
+	   title : "Codial | Sign Up"
+	   });
+	
+	
 }
 //RENDER SIGN IN PG 
 module.exports.signIn = function(req,res){
-   
+  /* if(req.isAuthenticated){   // if youre logged in and u go to the sign -in page-> ud be taken back to ur profile 
+		 res.redirect('/users/profile'); 
+	}
+	else{*/
+	console.log(req.password)
 	return res.render('user_sign_in', {
 	  title : "Codial | Sign In"
 	});
+	
+   
 }
 
 //SIGN UP 
 module.exports.create = function(req,res){
-
+console.log(req.body); 
 // check if pw is same as the confirm_password
   if(req.body.password!= req.body.confirm_password){
-  	  return res.redirect('back'); 
+       return res.redirect('back'); 
   }
 
   // check if the email is unique ;  returns the first document that has email=== req.body.email
@@ -38,22 +47,29 @@ module.exports.create = function(req,res){
 
 	 if(!user){     // if user is not found ie unique 
 
-	     // creaing a schema 
-	 	 User.create(req.body,function(err,user){    
+			// creaing a schema 
+	 		User.create(req.body,function(err,user){    
 
-		  if(err){ console.log("error while creating user"); return; }
+			if(err){ console.log("error while creating user"); return; }
 		  
-		  return res.redirect("/users/sign-in");  // sign up pg ->sign in pg 
-		 });
+			return res.redirect("/users/sign-in");  // sign up pg ->sign in pg 
+			});
 	 }
 
 	 else{
-	 	 return res.redirect('back'); // redirect to sign up pg again 
+	 	   return res.redirect('back'); // redirect to sign up pg again 
 	 }
   })
 }
 
-
-module.exports.createSession = function(){
-
+// sign in and create a session . assuming user has already signed in 
+module.exports.createSession = function(req,res){
+  return res.redirect('/'); 
 }
+
+module.exports.destroySession = function(req,res){
+   req.logout() ; // inbuilt func by passport 
+   return res.redirect('/'); 
+}
+
+

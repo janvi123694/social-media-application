@@ -3,12 +3,19 @@
   <head> 
     <title> <%= title %> </title>
     <link href = "/css/layout.css"></link>
+    <link href = "/css/header.css"></link>
+    <link href = "/css/footer.css"></link>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+      <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Montserrat:wght@500&display=swap" rel="stylesheet">
     <%- style %>
   </head>
 
   <body>
-    <%- include('header'); %>  
-	<%- body %>                      
+    <%- include('header'); %>
+      <main id ='layout-main'>
+        <%- body %>   
+      </main>
+	                   
 	<%-include('footer') %>
    <%- script %>
   </body>
